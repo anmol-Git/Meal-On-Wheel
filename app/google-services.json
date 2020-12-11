@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "450762140694",
+    "firebase_url": "https://meal-on-wheel-706cf.firebaseio.com",
+    "project_id": "meal-on-wheel-706cf",
+    "storage_bucket": "meal-on-wheel-706cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:450762140694:android:79b89d8cee3858b9851937",
+        "android_client_info": {
+          "package_name": "com.example.mealonwheel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "450762140694-lk58l8t9u1sjeicq67k70qoof31bqf3d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCO3zpy1cx0cC-hfNCq1DhXYN45e0dYl9w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "450762140694-lk58l8t9u1sjeicq67k70qoof31bqf3d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Meal On Wheel</string>
+    <string name="e_mail">E-mail:-</string>
+    <string name="password">Password:-</string>
+    <string name="sign_up">Sign up</string>
+    <string name="last_name">Last Name:-</string>
+    <string name="first_name">First Name:-</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoiaWFtYXZlbmVnZXIiLCJhIjoiY2todmhqMnp5MHVnbzJzcDV0N2RqaWtqNSJ9.T9n5tea8dHAGpvqPHoXr5A</string>
+</resources>
