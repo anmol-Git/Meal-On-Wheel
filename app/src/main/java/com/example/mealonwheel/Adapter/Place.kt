@@ -6,7 +6,7 @@ data class Place
  val rating: String,
  val available : String,
  val  imageUrl: String,
- val photos_url: String,
+ val order_url: String,
  val latitude :Double,
  val longitude :Double
 )

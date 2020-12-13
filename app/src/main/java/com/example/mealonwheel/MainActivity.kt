@@ -2,7 +2,6 @@ package com.example.mealonwheel
 
 import android.Manifest
 import android.content.Intent
-import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +10,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.toolbox.JsonObjectRequest
@@ -19,6 +17,7 @@ import com.example.mealonwheel.Adapter.FoodAdapter
 import com.example.mealonwheel.Adapter.IFoodAdapter
 import com.example.mealonwheel.Adapter.MySingleton
 import com.example.mealonwheel.Adapter.Place
+import com.google.firebase.auth.FirebaseAuth
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.DexterBuilder
 import com.karumi.dexter.PermissionToken
@@ -27,18 +26,16 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import im.delight.android.location.SimpleLocation
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.json.JSONObject
-import kotlin.collections.ArrayList
-
 
 
 class MainActivity : AppCompatActivity(), IFoodAdapter {
     private lateinit var  mfoodApadter :FoodAdapter
     private lateinit var location :SimpleLocation
+    private  var sinInActivity =  SignInActivity()
+
    companion object {
+       var isUserLogOut=false
        var latitude: Double = 0.0
        var longitude: Double = 0.0
    }
@@ -51,13 +48,13 @@ class MainActivity : AppCompatActivity(), IFoodAdapter {
             override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
 
                 location.beginUpdates()
-                latitude=location.latitude
-                longitude=location.longitude
+                latitude = location.latitude
+                longitude = location.longitude
                 getPlaces(location.latitude, location.longitude)
-            }
 
+            }
             override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
-                TODO("Not yet implemented")
+                 Toast.makeText(applicationContext,"Cannot display data without the location permission",Toast.LENGTH_LONG).show()
             }
 
             override fun onPermissionRationaleShouldBeShown(p0: PermissionRequest?, p1: PermissionToken?) {
@@ -75,6 +72,9 @@ class MainActivity : AppCompatActivity(), IFoodAdapter {
         }
 
 
+
+
+
         val recycle = findViewById<RecyclerView>(R.id.recycle)
         recycle.layoutManager = LinearLayoutManager(this)
 
@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity(), IFoodAdapter {
     override fun onItemClicked(place: Place) {
         val builder= CustomTabsIntent.Builder()
         val customTabsIntent=builder.build()
-        customTabsIntent.launchUrl(this, Uri.parse(place.photos_url))
+        customTabsIntent.launchUrl(this, Uri.parse(place.order_url))
     }
 
 
@@ -102,7 +102,13 @@ class MainActivity : AppCompatActivity(), IFoodAdapter {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id= item.itemId
         if (id==R.id.Log_out){
-            Toast.makeText(this,"Sorry, Nothing as of now :(",Toast.LENGTH_LONG).show()
+            val user =FirebaseAuth.getInstance().currentUser
+            if (user!=null){
+              isUserLogOut=true
+                val intent =Intent(this,SignInActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -128,7 +134,7 @@ class MainActivity : AppCompatActivity(), IFoodAdapter {
                                     rate.getString("aggregate_rating"),
                                     placeObject.getString("is_delivering_now"),
                                     placeObject.getString("featured_image"),
-                                    placeObject.getString("photos_url"),
+                                    placeObject.getString("url"),
                                     address.getDouble("latitude"),
                                     address.getDouble("longitude")
                             )
@@ -143,7 +149,7 @@ class MainActivity : AppCompatActivity(), IFoodAdapter {
 
                     }) {
                 override fun getHeaders(): MutableMap<String, String> {
-                    var map: HashMap<String, String> = HashMap()
+                    val map: HashMap<String, String> = HashMap()
                     map.put("user-key", "da840d878a667110cd95910fe32536c0")
                     map.put("Accept", "application/json");
                     return map
