@@ -5,15 +5,17 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mealonwheel.MainActivity.Companion.isUserLogOut
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class SignInActivity :AppCompatActivity() {
@@ -22,9 +24,8 @@ class SignInActivity :AppCompatActivity() {
         private const val  RC_SIGN_IN =120
 
     }
-
-    lateinit var  mAuth:FirebaseAuth
-    lateinit var googleSignInClient : GoogleSignInClient
+    lateinit var mAuth: FirebaseAuth
+    lateinit  var googleSignInClient : GoogleSignInClient
 
 
 
@@ -51,11 +52,18 @@ class SignInActivity :AppCompatActivity() {
             signIn()
         }
 
+        if(isUserLogOut) {
+            mAuth.signOut()
+            googleSignInClient.signOut()
+            isUserLogOut=false
+        }
+
 }
     private fun signIn() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -96,10 +104,12 @@ class SignInActivity :AppCompatActivity() {
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w("Sign in activity", "signInWithCredential:failure", task.exception)
-
+                            Toast.makeText(this,"Login failed ",Toast.LENGTH_LONG).show()
                     }
                 }
     }
+
+
 
 
 }
