@@ -14,8 +14,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 
 class SignInActivity :AppCompatActivity() {
@@ -74,9 +72,11 @@ class SignInActivity :AppCompatActivity() {
 
             val exception=task.exception
             if (task.isSuccessful){
+                
                 try {
                     // Google Sign In was successful, authenticate with Firebase
                     val account = task.getResult(ApiException::class.java)!!
+                    Toast.makeText(applicationContext, "login succesfull :)", Toast.LENGTH_LONG).show()
                     Log.d("", "firebaseAuthWithGoogle:" + account.id)
                     firebaseAuthWithGoogle(account.idToken!!)
                 } catch (e: ApiException) {
@@ -85,6 +85,7 @@ class SignInActivity :AppCompatActivity() {
                     // ...
                 }
             }else{
+                Toast.makeText(applicationContext, "login failed :(", Toast.LENGTH_LONG).show()
                 Log.w("Error", exception.toString())
             }
 
@@ -96,12 +97,15 @@ class SignInActivity :AppCompatActivity() {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
+                        Toast.makeText(applicationContext, "login success", Toast.LENGTH_LONG).show()
                         // Sign in success, update UI with the signed-in user's information
                         Log.d("sign in activity", "signInWithCredential:success")
                         val intent=Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else {
+
+                        //Toast.makeText(applicationContext, "login failed", Toast.LENGTH_LONG).show()
                         // If sign in fails, display a message to the user.
                         Log.w("Sign in activity", "signInWithCredential:failure", task.exception)
                             Toast.makeText(this,"Login failed ",Toast.LENGTH_LONG).show()
