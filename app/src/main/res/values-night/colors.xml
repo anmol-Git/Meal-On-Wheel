@@ -18,6 +18,8 @@
     <color name="darker">#151B20</color>
     <color name="yellow">#FFC114</color>
 
+    <color name="myColor">#121212</color>
+
 
     <color name="titleTextColor">@color/white</color>
     <color name="CustomTextColor">@color/lightMediumGray</color>

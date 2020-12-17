@@ -7,4 +7,6 @@
     <string name="first_name">First Name:-</string>
     <string name="mapbox_access_token">pk.eyJ1IjoiaWFtYXZlbmVnZXIiLCJhIjoiY2todmhqMnp5MHVnbzJzcDV0N2RqaWtqNSJ9.T9n5tea8dHAGpvqPHoXr5A</string>
     <string name="log_out">Log Out</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
