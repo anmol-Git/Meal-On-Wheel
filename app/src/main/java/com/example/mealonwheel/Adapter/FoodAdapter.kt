@@ -1,31 +1,26 @@
 package com.example.mealonwheel.Adapter
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat.getDrawable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.mealonwheel.MainActivity
 import com.example.mealonwheel.R
 import com.example.mealonwheel.R.color.green
 import com.example.mealonwheel.R.color.red
+import com.example.mealonwheel.SignInActivity
+import com.example.mealonwheel.places_fragment
 import java.text.DecimalFormat
 import kotlin.math.cos
 
-class FoodAdapter(private val context: Context,private val listener :IFoodAdapter ) : RecyclerView.Adapter<FoodView>() {
+class FoodAdapter(private val context: Context, private val listener: IFoodAdapter) : RecyclerView.Adapter<FoodView>() {
       private val allPlace : ArrayList<Place> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodView {
@@ -57,7 +52,7 @@ class FoodAdapter(private val context: Context,private val listener :IFoodAdapte
            .error(R.drawable.cooking).into(holder.PlaceImage)
        }
 
-             var dist=distance(MainActivity.latitude,MainActivity.longitude,currPlace.latitude,currPlace.longitude)
+             var dist=distance(places_fragment.latitude,places_fragment.longitude,currPlace.latitude,currPlace.longitude)
 
         if (dist==0.0){
             holder.PlaceDistance.text="No data"
